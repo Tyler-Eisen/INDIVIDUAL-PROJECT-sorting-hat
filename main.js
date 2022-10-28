@@ -77,7 +77,24 @@ const cardsOnDom = (array) => {
   renderToDom("#root", domString);
 }
 
+// Creates card for student expelled//
 
+const evilOnDom = (array) => {
+  let domString = "";
+  for (const member of array) {
+    domString += 
+`<div class="card" style="width: 18rem;">
+<img src="..." class="card-img-top" alt="...">
+<div class="card-body">
+  <h5 class="card-title">${member.name}</h5>
+  <button style="width:100%; position:absolute, bottom:0, margin:0 auto" class="btn btn-danger" id="delete--${member.id}">Expel</button>
+  
+</div>
+</div>`
+;
+  }
+  renderToDom("#root2", domString);
+}
 
 //Pulls from houses array randomly//
  const randomSort = () =>{
@@ -100,10 +117,10 @@ function renderToDom(divId, htmlToRender) {
  const createStudent=(e)=>{
   e.preventDefault();
  
- const newStudentObj={
-  id: students.length +1,
-  name: document.querySelector('#name').value,
-  house: randomSort(),
+  const newStudentObj={
+   id: students.length +1,
+   name: document.querySelector('#name').value,
+    house: randomSort(),
  }
 students.push(newStudentObj)
 cardsOnDom(students)
@@ -112,7 +129,7 @@ form.reset();
  
 form.addEventListener('submit', createStudent);
 
-//Moves from studetns array to deathEater arraya and displays it//
+//Moves from students array to deathEater array and displays it//
 const app = document.querySelector("#root");
 app.addEventListener('click', (e) => {
   
@@ -120,7 +137,7 @@ app.addEventListener('click', (e) => {
     const [, id] = e.target.id.split("--");
     const index = students.findIndex(e => e.id === Number(id));
     students.splice(index, 1);
-    deathEaters.push(index,1)
+    deathEaters.push(students[i])
     renderToDom("#root2",deathEaters);
   }
 });
@@ -132,6 +149,7 @@ app.addEventListener('click', (e) => {
 
 const startApp= () =>{
   cardsOnDom(students);
+  evilOnDom(deathEaters)
 }
 
 startApp();
