@@ -39,9 +39,12 @@ const deathEaters=[
 
 // Hides and displays the form//
 const startBtn = document.querySelector("#startBtn");
+const form = document.querySelector('form');
+form.style.visibility= 'hidden';
+
 startBtn.addEventListener ('click', () => {
-  console.log("btnpressed");
-  const form = document.getElementById ('form');
+  // console.log("btnpressed");
+  
 
   if (form.style.visibility === 'hidden'){
     form.style.visibility = 'visible';
@@ -50,12 +53,8 @@ startBtn.addEventListener ('click', () => {
   }
 });
 
-// Targets the submit button//
-const subBtn = document.querySelector("#submitBtn")
-submitBtn.addEventListener('submit', ()=>{
-  console.log ("submitted");
 
-});
+
 
 // Creates card for the student sorted//
 
@@ -68,7 +67,7 @@ const cardsOnDom = (array) => {
 <div class="card-body">
   <h5 class="card-title">${member.name}</h5>
   <p class="card-text"> ${member.house}.</p>
-  <button style="width:100%; position:absolute, bottom:0, margin:0 auto" class="btn btn-danger" id="delete--${member.id}">Expel</button>
+  <button style="width:100%; position:absolute, bottom:0, margin:0 auto" class="btn btn-danger expelBtn" id="delete--${member.id}">Expel</button>
   
 </div>
 </div>`
@@ -87,7 +86,7 @@ const evilOnDom = (array) => {
 <img src="..." class="card-img-top" alt="...">
 <div class="card-body">
   <h5 class="card-title">${member.name}</h5>
-  <button style="width:100%; position:absolute, bottom:0, margin:0 auto" class="btn btn-danger" id="delete--${member.id}">Expel</button>
+  
   
 </div>
 </div>`
@@ -124,32 +123,63 @@ function renderToDom(divId, htmlToRender) {
  }
 students.push(newStudentObj)
 cardsOnDom(students)
+addEventListenerToExpelButtons()
 form.reset();
  }
  
 form.addEventListener('submit', createStudent);
 
-//Moves from students array to deathEater array and displays it//
-const app = document.querySelector("#root");
-app.addEventListener('click', (e) => {
+// //Moves from students array to deathEater array and displays it//
+// const app = document.querySelector("#root");
+// app.addEventListener('click', (e) => {
   
-  if (e.target.id.includes("delete")) {
-    const [, id] = e.target.id.split("--");
-    const index = students.findIndex(e => e.id === Number(id));
-    students.splice(index, 1);
-    deathEaters.push(students[i])
-    renderToDom("#root2",deathEaters);
+//   if (e.target.id.includes("delete")) {
+//     const [, id] = e.target.id.split("--");
+//     const index = students.findIndex(e => e.id === Number(id));
+//     students.splice(index, 1);
+//     deathEaters.push(students[i])
+//     renderToDom("#root2",deathEaters);
+//   }
+// });
+
+
+
+
+
+
+  // Grab all the expel btns//
+  const addEventListenerToExpelButtons=() =>{
+const expelButtons= document.querySelectorAll(".expelBtn");
+  
+
+  for (const button of expelButtons) {
+    button.addEventListener('click', (e)=> {
+      const [, id] = e.target.id.split("--");
+      // console.log(id);
+
+// find the index of the student object with specific ID
+      index = students.findIndex(student => student.id === Number(id))
+      console.log(index)
+
+      // 'cut' out the student to be expelled
+      studentToExpel = students.splice(index, 1)[0]
+      console.log(studentToExpel)
+
+      // 'add' the expelled student to deathEaters
+      deathEaters.push(studentToExpel)
+
+      cardsOnDom(students);
+      evilOnDom(deathEaters);
+      addEventListenerToExpelButtons()
+    })
   }
-});
 
-
-
-
-
+}
 
 const startApp= () =>{
   cardsOnDom(students);
-  evilOnDom(deathEaters)
+  evilOnDom(deathEaters);
+  addEventListenerToExpelButtons()
 }
 
 startApp();
