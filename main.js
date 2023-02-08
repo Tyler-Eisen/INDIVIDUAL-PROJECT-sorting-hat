@@ -3,21 +3,25 @@ const students=[
     id:1,
     name: "Godric",
     house: "Gryffindor",
+    img: "Founders_gryffindor1.png"
   },
 {
   id: 2,
   name: "Salazar",
   house: "Slytherin",
+  img: "slytherin.png"
 },
 {
   id: 3,
   name: "Rowena",
   house: "Ravenclaw",
+  img: "ravenclaw.png"
 },
 {
   id: 4,
   name: "Helga",
   house:"Hufflepuff",
+  img: "hufflepuff.png"
 
 },
 ];
@@ -33,6 +37,7 @@ const deathEaters=[
   {
     id: 1,
     name: "Draco",
+    img: "draco.png"
     
   }
 ];
@@ -63,9 +68,9 @@ const cardsOnDom = (array) => {
   for (const member of array) {
     domString += 
 `<div class="card" style="width: 18rem;">
-<img src="..." class="card-img-top" alt="...">
 <div class="card-body">
-  <h5 class="card-title">${member.name}</h5>
+<h5 class="card-title">${member.name}</h5>
+<img src="${member.img}" class="card-img-top" alt="...">
   <p class="card-text"> ${member.house}.</p>
   <button style="width:100%; position:absolute, bottom:0, margin:0 auto" class="btn btn-danger expelBtn" id="delete--${member.id}">Expel</button>
   
@@ -83,7 +88,7 @@ const evilOnDom = (array) => {
   for (const member of array) {
     domString += 
 `<div class="card" style="width: 18rem;">
-<img src="..." class="card-img-top" alt="...">
+<img src="${member.img}" class="card-img-top" alt="...">
 <div class="card-body">
   <h5 class="card-title">${member.name}</h5>
   
@@ -128,6 +133,45 @@ form.reset();
  }
  
 form.addEventListener('submit', createStudent);
+
+// Filters Students
+const filter = (students, requestedHouse) => {
+  const typeArray = [];
+  for (const student of students) {
+    if (student.house === requestedHouse) {
+      typeArray.push(student);
+    } 
+  }
+  return typeArray;
+}
+
+const gButton = document.querySelector("#gButton");
+  gButton.addEventListener('click', () => {
+    const Gryffindor = filter(students, 'Gryffindor');
+    cardsOnDom(Gryffindor);
+  console.log("button was clicked");
+  });
+
+  const sButton = document.querySelector("#sButton");
+  sButton.addEventListener('click', () => {
+    const Slytherin = filter(students, 'Slytherin');
+    cardsOnDom(Slytherin);
+  console.log("button was clicked");
+  });
+
+  const rButton = document.querySelector("#rButton");
+  rButton.addEventListener('click', () => {
+    const Ravenclaw = filter(students, 'Ravenclaw');
+    cardsOnDom(Ravenclaw);
+  console.log("button was clicked");
+  });
+
+  const hButton = document.querySelector("#hButton");
+  hButton.addEventListener('click', () => {
+    const Hufflepuff = filter(students, 'Hufflepuff');
+    cardsOnDom(Hufflepuff);
+  console.log("button was clicked");
+  });
 
 // //Moves from students array to deathEater array and displays it//
 // const app = document.querySelector("#root");
