@@ -14,3 +14,5 @@ Focus on MVP. Do not spend a ton of time styling initially. Hit functionality fi
 ## Sorting Hat
 This app is a magical Hogwarts School student sorting and expulsion app. It allows the user to create a new student and randomly sort them into one of the four Hogwarts houses (Gryffindor, Slytherin, Ravenclaw, and Hufflepuff). The app also allows the user to filter students based on their house and expel any student they choose. The expelled students are then displayed in a separate section of the app as known "Death Eaters". The app is built using HTML, CSS, and JavaScript, and utilizes event listeners and functions to dynamically update the DOM.
 
+## Loom
+https://www.loom.com/share/6bcc5b645d9e4612a5882da7afc414c3
